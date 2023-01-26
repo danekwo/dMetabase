@@ -42,7 +42,7 @@
 
     <string name="dfu_firmware_path_type">Invalid firmware path type</string>
 
-    <string name="app_name">MetaBase</string>
+    <string name="app_name">dMetaBase</string>
     <string name="title_config">Configure</string>
     <string name="title_error">Error</string>
     <string name="title_download">Download</string>
@@ -114,7 +114,8 @@
     <string name="label_done">Done</string>
 
     <string name="label_later">Later</string>
-    <string name="label_num_samples"># of Samples</string>
+    <string name="label_num_samples"># of samples</string>
+    <string name="label_num_steps"># of steps</string>
     <string name="label_stop">Stop</string>
     <string name="label_run_diagnostic">Run Diagnostic</string>
     <string name="label_update_firmware">Update Firmware</string>

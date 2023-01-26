@@ -161,7 +161,7 @@ public class StreamMonitorFragment extends AppFragmentBase implements ServiceCon
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_stream_monitor, container, false);
+        return inflater.inflate(R.layout.fragment_stream_monitor_d, container, false);
     }
 
     @Override
@@ -325,20 +325,24 @@ public class StreamMonitorFragment extends AppFragmentBase implements ServiceCon
             Calendar now = Calendar.getInstance();
             binder.session = new AppState.Session("", String.format(Locale.US, DataHandler.CsvDataHandler.TIMESTAMP_FORMAT, now));
 
-            LinearLayout metrics = getView().findViewById(R.id.metrics);
+            LinearLayout metrics = getView().findViewById(R.id.metrics_h);
             for (Pair<MetaBaseDevice, Map<SensorConfig, Route>> it : parameter.devices) {
                 final DataHandler.SampleCountDataHandler sampleCounter = new DataHandler.SampleCountDataHandler();
                 sampleCounter.init();
                 binder.dataHandlers.add(sampleCounter);
                 binder.streamMetrics.add(sampleCounter);
 
-                LinearLayout status = (LinearLayout) getLayoutInflater().inflate(R.layout.board_status, null);
+                LinearLayout status = (LinearLayout) getLayoutInflater().inflate(R.layout.board_status_d, getView().findViewById(R.id.metrics_h), false);
                 final TextView deviceName = status.findViewById(R.id.device_name);
                 final ImageView alert = status.findViewById(R.id.alert_reconnecting);
 
                 deviceName.setText(it.first.name);
                 sampleCounter.sampleCountView = status.findViewById(R.id.sample_count);
                 sampleCounter.sampleCountView.setText("0");
+
+                TextView stepCountView = status.findViewById(R.id.step_count);
+                stepCountView.setText("0");
+                // TODO figure out how to 1) count steps 2) update them similarly to sampleCount
 
                 final MetaWearBoard m = activityBus.getMetaWearBoard(it.first.btDevice);
                 m.onUnexpectedDisconnect(code -> dcHandler.apply(m, deviceName, alert));
@@ -389,10 +393,10 @@ public class StreamMonitorFragment extends AppFragmentBase implements ServiceCon
             binder.start = System.nanoTime();
             uiScheduler.postDelayed(updateValues, 1000L);
         } else {
-            LinearLayout metrics = getView().findViewById(R.id.metrics);
+            LinearLayout metrics = getView().findViewById(R.id.metrics_h);
             int i = 0;
             for (MetaBaseDevice d: binder.samples.keySet()) {
-                LinearLayout status = (LinearLayout) getLayoutInflater().inflate(R.layout.board_status, null);
+                LinearLayout status = (LinearLayout) getLayoutInflater().inflate(R.layout.board_status_d, null);
                 final TextView deviceName = status.findViewById(R.id.device_name);
                 final ImageView alert = status.findViewById(R.id.alert_reconnecting);
 
